@@ -1,0 +1,20 @@
+bitrix-web:
+ build: ./bitrix-web
+ container_name: bitrix-web
+ restart: always
+ privileged: true
+ ports: 
+  - "22022:22"
+  - "8780:80" 
+ links:
+  - bitrix-mysql
+ command: "/usr/bin/python /usr/bin/supervisord -c /etc/supervisord.conf"
+
+bitrix-mysql:
+ image: mariadb:5.5
+ container_name: bitrix-mysql
+ restart: always
+ environment:
+  MYSQL_ROOT_PASSWORD: 'root_pass_for_localhost_root' 
+  MYSQL_USER: 'root'
+  MYSQL_PASSWORD: 'root_pass_for_eachhost_root'
